@@ -1,0 +1,88 @@
+:root {
+    --darkSlateGray: #395e66;
+    --myrtleGreen: #387d7a;
+    --seaGreen: #32936f;
+    --jadeGreen: #26a96c;
+    --kellyGreen: #2bc016;
+}
+
+@font-face {
+    font-family: wixFont;
+    src: url(Assets/WixMadeforDisplay-VariableFont_wght.ttf);
+}
+
+body {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 100px 1fr;
+    height: 100vh;
+    margin: 0px;
+    font-family: wixFont, sans-serif;
+}
+
+button {
+    border: none;
+    background-color: black;
+    height: 35px;
+    width: 60px;
+    border-radius: 6px;
+    color: var(--kellyGreen);
+}
+
+.pageHeader {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 10px;
+    font-size: x-large;
+    grid-area: 1 / 1 / 2 / 3;
+    background-color: var(--darkSlateGray);
+}
+
+.sortButton {
+    position: absolute;
+    align-self: flex-end;
+    right: 100px;
+    margin-bottom: 10px;
+    width: 100px;
+}
+
+.addTaskButton {
+    position: absolute;
+    align-self: flex-end;
+    right: 10px;
+    margin-bottom: 10px;
+    width: 80px;
+}
+
+.sideNavBar {
+    background-color: var(--myrtleGreen);
+}
+
+.taskContainer {
+    background-color: var(--seaGreen);
+}
+
+@media (max-width: 1024px) {
+    body {
+        grid-template-columns: 0px 1fr;
+        transition-duration: .4s;
+        transition-timing-function: ease-in;
+    }
+
+    body.mobileMenu {
+        grid-template-columns: 200px 1fr;
+    }
+
+    .expandSideNavButton {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        background-image: url(Assets/menu.svg);
+        background-size: cover;
+        height: 40px;
+        width: 40px;
+        border: none;
+        background-color: var(--darkSlateGray);
+    }
+}
