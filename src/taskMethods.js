@@ -34,6 +34,23 @@ function addTaskToDOM(task) {
     taskDescription.classList.add('taskDescription');
     taskWrapper.appendChild(taskDescription);
 
+    const chevron = document.createElement('div');
+    chevron.classList.add('chevron');
+    chevron.addEventListener('click', () => {
+        taskWrapper.classList.toggle('expanded');
+    });
+    taskWrapper.appendChild(chevron);
+
+    const completeButton = document.createElement('button');
+    completeButton.classList.add('completeButton');
+    completeButton.textContent = "Complete";
+    taskWrapper.appendChild(completeButton);
+
+    const editButton = document.createElement('button');
+    editButton.classList.add('editButton');
+    editButton.textContent = "Edit";
+    taskWrapper.appendChild(editButton);
+
     taskContainer.appendChild(taskWrapper);
 };
 

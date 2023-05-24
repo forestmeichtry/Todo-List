@@ -5,9 +5,9 @@
     --jadeGreen: #26a96c;
     --kellyGreen: #2bc016;
 
-    --headerHeight: 100px;
+    --headerHeight: 120px;
     --sideNavWidth: 300px;
-    --taskHeight: 80px;
+    --taskHeight: 100px;
 }
 
 @font-face {
@@ -37,6 +37,7 @@ button {
 button:hover {
     background-color: rgb(31, 31, 31);
     cursor: pointer;
+    transition-duration: 0s;
 }
 
 .pageHeader {
@@ -81,15 +82,23 @@ button:hover {
 }
 
 .taskWrapper {
+    position: relative;
     display: grid;
+    gap: 10px;
     grid-template-columns: 1fr 120px 120px;
-    grid-template-rows: calc(var(--taskHeight) / 2) 1fr;
+    grid-template-rows: 45px 20px 40px 80px;
     height: var(--taskHeight);
     flex-shrink: 0;
     border-radius: 6px;
     padding: 15px;
     background-color: var(--kellyGreen);
     overflow: hidden;
+    transition: .5s;
+    transition-timing-function: ease-in-out;
+}
+
+.taskWrapper.expanded {
+    height: calc(var(--taskHeight) * 2);
 }
 
 .taskName {
@@ -98,12 +107,25 @@ button:hover {
 }
 
 .taskDescription {
-    position: relative;
-    top: var(--taskHeight);
+    grid-area: 3 / 1 / 5 / 2;
+    opacity: 0;
+    transition-duration: .5s;
+}
+
+.taskDescription::before {
+    white-space: pre-wrap;
+    font-weight: bold;
+    content: 'Description: \A';
+}
+
+.taskWrapper.expanded .taskDescription {
+    opacity: 1;
+    transition-delay: .3s;
 }
 
 .dueDate {
     grid-area: 2 / 2 / 3 / 3;
+    align-self: center;
 }
 
 .dueDate::before {
@@ -113,11 +135,53 @@ button:hover {
 
 .taskImportance {
     grid-area: 2 / 3 / 3 / 4;
+    align-self: center;
 }
 
 .taskImportance::before {
     font-weight: bold;
     content: 'Importance: ';
+}
+
+.chevron {
+    position: absolute;
+    justify-self: center;
+    align-self: flex-end;
+    height: 40px;
+    width: 160px;
+    background-image: url(Assets/chevron-up.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: rotateZ(180deg);
+    transition: .5s;
+}
+
+.taskWrapper.expanded .chevron {
+    transform: rotateY(180deg);
+}
+
+.editButton,
+.completeButton {
+    position: relative;
+    bottom: 10px;
+    width: 80px;
+    align-self: center;
+    transition-duration: .5s;
+    opacity: 0;
+}
+
+.taskWrapper.expanded .editButton,
+.taskWrapper.expanded .completeButton {
+    opacity: 1;
+    transition-delay: .3s;
+}
+
+.editButton {
+    grid-area: 4 / 2 / 5 / 3;
+}
+
+.completeButton {
+    grid-area: 4 / 3 / 5 / 4;
 }
 
 @media (max-width: 1024px) {
@@ -177,5 +241,27 @@ button:hover {
 
     .taskImportance {
         grid-area: 2 / 2 / 3 / 3;
+    }
+
+    .taskDescription {
+        position: relative;
+        grid-area: 3 / 1 / 5 / 4;
+    }
+
+    .editButton,
+    .completeButton {
+        position: relative;
+        bottom: 10px;
+        width: 80px;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .editButton {
+        grid-area: 4 / 1 / 5 / 2;
+    }
+
+    .completeButton {
+        grid-area: 4 / 2 / 5 / 3;
     }
 }
