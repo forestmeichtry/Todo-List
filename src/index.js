@@ -1,5 +1,6 @@
 import './style.css';
 import { addTask } from './taskMethods';
+import { addProject } from './projectMethods';
 
 const pageHeader = document.createElement('div');
 pageHeader.classList.add('pageHeader');
@@ -8,6 +9,19 @@ document.body.appendChild(pageHeader);
 const sideNavBar = document.createElement('div');
 sideNavBar.classList.add('sideNavBar');
 document.body.appendChild(sideNavBar);
+
+const projectHeader = document.createElement('span');
+projectHeader.classList.add('projectHeader');
+projectHeader.textContent = "Projects";
+sideNavBar.appendChild(projectHeader);
+
+const addNewProjectButton = document.createElement('button');
+addNewProjectButton.classList.add('addNewProjectButton');
+addNewProjectButton.textContent = 'Add Project';
+sideNavBar.appendChild(addNewProjectButton);
+
+addProject('Work');
+addProject('Home');
 
 const taskContainer = document.createElement('div');
 taskContainer.classList.add('taskContainer');
