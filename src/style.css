@@ -206,8 +206,9 @@ button:hover {
 }
 
 .dueDate::before {
+    white-space: pre-wrap;
     font-weight: bold;
-    content: 'Due: ';
+    content: 'Due: \A';
 }
 
 .taskImportance {
@@ -259,6 +260,69 @@ button:hover {
 
 .completeButton {
     grid-area: 4 / 3 / 5 / 4;
+}
+
+.addTaskPopup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    transform: translateY(-400px);
+    transition-duration: .5s;
+    height: 1px;
+    width: 1px;
+    justify-self: center;
+    overflow: hidden;
+    z-index: 20;
+    border: solid black 2px;
+    border-radius: 6px;
+}
+
+.addTaskPopup > * {
+    opacity: 0;
+}
+
+.addTaskPopup.active {
+    height: min(70vmax, 450px);
+    width: min(80vw, 400px);
+    background-color: var(--myrtleGreen);
+    transform: translateY(10vmax);
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.addTaskPopup.active > * {
+    opacity: 1;
+}
+
+fieldset {
+    height: 93%;
+    width: 90%;
+    border-radius: 6px;
+}
+
+label {
+    margin-bottom: -18px;
+}
+
+.formList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.radioWrap {
+    display: flex;
+}
+
+.formButtonWrap {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+textarea {
+    resize: none;
 }
 
 @media (max-width: 1024px) {
