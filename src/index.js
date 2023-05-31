@@ -1,6 +1,6 @@
 import './style.css';
-import { addTask } from './taskMethods';
-import { addProject } from './projectMethods';
+import { addTask, sortTasks } from './taskMethods';
+import { addProject, projectList } from './projectMethods';
 
 const pageHeader = document.createElement('div');
 pageHeader.classList.add('pageHeader');
@@ -40,9 +40,13 @@ pageHeader.appendChild(sortButton);
 sortButton.addEventListener('click', () => {
     if (sortButton.textContent === 'Sort By: Priority') {
         sortButton.textContent = "Sort By: Due Date";
+        projectList.sortBy = 'Date';
     } else {
         sortButton.textContent = "Sort By: Priority";
+        projectList.sortBy = 'Priority';
     }
+
+    sortTasks();
 });
 
 const addTaskButton = document.createElement('button');
@@ -185,7 +189,7 @@ function createTaskForm() {
             descriptionValue = descriptionInput.value;
         };
 
-        addTask(nameInput.value, descriptionValue, dateValue, checkedRadio, 'Coding Projects');
+        addTask(nameInput.value, descriptionValue, dateValue, checkedRadio);
 
         formList.reset();
         radioMed.checked = true;

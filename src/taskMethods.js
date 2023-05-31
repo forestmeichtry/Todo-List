@@ -1,15 +1,51 @@
-function addTask(taskName, description, dueDate, importance, project) {
-    const newTask = taskFactory(taskName, description, dueDate, importance);
-    // create projectMethods, and export add to project function. 
-    // function should return error if project does not exist
+import { projectList } from "./projectMethods";
+import { compareAsc, parseISO } from "date-fns";
 
-    // Task needs to be added to DOM as well
-    addTaskToDOM(newTask);
+function addTask(taskName, description, dueDate, importance) {
+    const newTask = taskFactory(taskName, description, dueDate, importance);
+    projectList.addTask(newTask);
+    sortTasks();
 };
+
+function sortTasks() {
+    const project = projectList.activeProject;
+    const sortType = projectList.sortBy;
+    const taskContainer = document.querySelector('.taskContainer');
+
+    while (taskContainer.firstChild) {
+        taskContainer.removeChild(taskContainer.lastChild);
+    };
+
+    if (sortType === 'Date') {
+        project.tasks.sort((a, b) => {
+            if (a.dueDate === 'No Due Date') {
+                return 1;
+            } else if (b.dueDate === 'No Due Date') {
+                return -1;
+            } else {
+                 return compareAsc(parseISO(a.dueDate), parseISO(b.dueDate));
+            }
+        });
+        console.log(project.tasks);
+    } else {
+        project.tasks.sort((a, b) => {
+            if (a.importance === b.importance) {
+                return 0;
+            } else if (a.importance === 'High' || b.importance === 'Low') {
+                return -1;
+            } else if (b.importance === 'High' || a.importance === 'Low') {
+                return 1;
+            };
+        });
+    };
+
+    for (let task of project.tasks) {
+        addTaskToDOM(task);
+    }
+}
 
 function addTaskToDOM(task) {
     const taskContainer = document.querySelector('.taskContainer');
-    // create visual representation of task and add to DOM
 
     const taskWrapper = document.createElement('div');
     taskWrapper.classList.add('taskWrapper');
@@ -60,4 +96,4 @@ const taskFactory = (taskName, description, dueDate, importance) => {
     return {taskName, description, dueDate, importance};
 };
 
-export { addTask };
+export { addTask, sortTasks };

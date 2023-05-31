@@ -102,6 +102,10 @@ button:hover {
     cursor: pointer;
 }
 
+.project.selected {
+    background-color: rgba(0, 0, 0, .2);
+}
+
 .editProjectButton,
 .deleteProjectButton,
 .addNewProjectButton {
