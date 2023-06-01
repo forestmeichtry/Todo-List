@@ -5,6 +5,7 @@ function addTask(taskName, description, dueDate, importance) {
     const newTask = taskFactory(taskName, description, dueDate, importance);
     projectList.addTask(newTask);
     sortTasks();
+    projectList.addToStorage();
 };
 
 function sortTasks() {
@@ -26,7 +27,6 @@ function sortTasks() {
                  return compareAsc(parseISO(a.dueDate), parseISO(b.dueDate));
             }
         });
-        console.log(project.tasks);
     } else {
         project.tasks.sort((a, b) => {
             if (a.importance === b.importance) {

@@ -23,9 +23,6 @@ sideNavBar.appendChild(addNewProjectButton);
 const addTaskPopup = document.createElement('div');
 createTaskForm();
 
-addProject('Work');
-addProject('Home');
-
 const taskContainer = document.createElement('div');
 taskContainer.classList.add('taskContainer');
 document.body.appendChild(taskContainer);
@@ -67,6 +64,20 @@ if (window.screen.width <= 1024) {
         document.body.classList.toggle('mobileMenu');
     });
 }
+
+if (storageAvailable('localStorage') && window.localStorage.getItem("projects")) {
+    let projects = JSON.parse(window.localStorage.getItem("projects"));
+    for (let project of projects) {
+        addProject(project.name);
+        projectList.selectProject(project.name);
+        for (let task of project.tasks) {
+            addTask(task.taskName, task.description, task.dueDate, task.importance);
+        };
+    };
+} else {
+    addProject('Work');
+    addProject('Home');
+};
 
 function createTaskForm() {
     addTaskPopup.classList.add('addTaskPopup');
@@ -194,4 +205,32 @@ function createTaskForm() {
         formList.reset();
         radioMed.checked = true;
     });
+};
+
+
+function storageAvailable(type) {
+    let storage;
+    try {
+        storage = window[type];
+        const x = "__storage_test__";
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    } catch (e) {
+        return (
+            e instanceof DOMException &&
+            // everything except Firefox
+            (e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === "QuotaExceededError" ||
+                // Firefox
+                e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage &&
+            storage.length !== 0
+        );
+    };
 };

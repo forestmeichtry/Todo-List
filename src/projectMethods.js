@@ -1,3 +1,5 @@
+import { sortTasks } from "./taskMethods";
+
 function addProject(projectName) {
     const domElement = addProjectToDom(projectName);
     projectList.addProject({name: projectName, element: domElement, tasks: []})
@@ -51,9 +53,14 @@ const projectList = {
                 project.element.classList.remove('selected');
             };
         };
+
+        sortTasks();
     },
     addTask: function(task) {
         this.activeProject.tasks.push(task);
+    },
+    addToStorage: function() {
+        window.localStorage.projects = JSON.stringify(this.projects);
     },
 };
 
