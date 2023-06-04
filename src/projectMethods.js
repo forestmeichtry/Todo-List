@@ -10,18 +10,35 @@ function addProjectToDom(projectName) {
     const addProjectButton = document.querySelector('.addNewProjectButton');
 
     const newProject = document.createElement('div');
+    newProject.dataset.index = projectList.projects.length;
     newProject.classList.add('project');
-    newProject.textContent = projectName;
+
+    const projectTitle = document.createElement('input');
+    projectTitle.classList.add('projectTitle');
+    projectTitle.value = projectName;
+    projectTitle.disabled = 'disabled';
+    projectTitle.addEventListener('focusout', () => {
+        projectTitle.disabled = 'disabled';
+    });
+    projectTitle.addEventListener('input', function() {
+        projectList.editProject(newProject.dataset.index, this.value);
+    });
+    newProject.appendChild(projectTitle);
 
     const editButton = document.createElement('button');
+    editButton.addEventListener('click', () => {
+        projectTitle.disabled = '';
+        projectTitle.focus();
+    });
     editButton.classList.add('editProjectButton');
+
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('deleteProjectButton');
     newProject.appendChild(editButton);
     newProject.appendChild(deleteButton);
 
     newProject.addEventListener('click', () => {
-        projectList.selectProject(projectName);
+        projectList.selectProject(newProject.dataset.index);
     });
 
     sideNavBar.insertBefore(newProject, addProjectButton);
@@ -40,21 +57,21 @@ const projectList = {
             this.activeProject = project;
         };
     },
-    selectProject: function(projectName) {
-        if (projectName === this.activeProject.name) {
-            return;
-        };
-
-        for (let project of this.projects) {
-            if (project.name === projectName) {
-                project.element.classList.add('selected');
-                this.activeProject = project;
+    selectProject: function(index) {
+        for (let i = 0; i < this.projects.length; i++) {
+            if (i === index) {
+                this.projects[i].element.classList.add('selected');
+                this.activeProject = projects[i];
             } else {
-                project.element.classList.remove('selected');
+                this.projects[i].element.classList.remove('selected');
             };
         };
 
         sortTasks();
+    },
+    editProject: function(index, newName) {
+        this.projects[index].name = newName;
+        this.addToStorage();
     },
     addTask: function(task) {
         this.activeProject.tasks.push(task);
