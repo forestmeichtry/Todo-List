@@ -2,7 +2,8 @@ import { sortTasks } from "./taskMethods";
 
 function addProject(projectName) {
     const domElement = addProjectToDom(projectName);
-    projectList.addProject({name: projectName, element: domElement, tasks: []})
+    projectList.addProject({name: projectName, element: domElement, tasks: []});
+    return domElement;
 };
 
 function addProjectToDom(projectName) {
@@ -56,12 +57,13 @@ const projectList = {
             project.element.classList.add('selected');
             this.activeProject = project;
         };
+        this.addToStorage();
     },
     selectProject: function(index) {
         for (let i = 0; i < this.projects.length; i++) {
-            if (i === index) {
+            if (i === parseInt(index)) {
                 this.projects[i].element.classList.add('selected');
-                this.activeProject = projects[i];
+                this.activeProject = this.projects[i];
             } else {
                 this.projects[i].element.classList.remove('selected');
             };

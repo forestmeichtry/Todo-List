@@ -18,6 +18,11 @@ sideNavBar.appendChild(projectHeader);
 const addNewProjectButton = document.createElement('button');
 addNewProjectButton.classList.add('addNewProjectButton');
 addNewProjectButton.textContent = 'Add Project';
+addNewProjectButton.addEventListener('click', () => {
+    const newProjectInput = addProject('').querySelector('.projectTitle');
+    newProjectInput.disabled = '';
+    newProjectInput.focus();
+});
 sideNavBar.appendChild(addNewProjectButton);
 
 const addTaskPopup = document.createElement('div');
@@ -68,8 +73,8 @@ if (window.screen.width <= 1024) {
 if (storageAvailable('localStorage') && window.localStorage.getItem("projects")) {
     let projects = JSON.parse(window.localStorage.getItem("projects"));
     for (let project of projects) {
-        addProject(project.name);
-        projectList.selectProject(project.name);
+        const projectDomElement = addProject(project.name);
+        projectList.selectProject(projectDomElement.dataset.index);
         for (let task of project.tasks) {
             addTask(task.taskName, task.description, task.dueDate, task.importance);
         };
