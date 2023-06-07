@@ -28,6 +28,30 @@ sideNavBar.appendChild(addNewProjectButton);
 const addTaskPopup = document.createElement('div');
 createTaskForm();
 
+const warningPopup = document.createElement('div');
+warningPopup.classList.add('warningPopup');
+const warningText = document.createElement('span');
+warningText.classList.add('warningText');
+warningText.textContent = "This project contains unfinished tasks, do you still want to delete it?";
+warningPopup.appendChild(warningText);
+const warningCancel = document.createElement('button');
+warningCancel.textContent = "Cancel";
+warningCancel.classList.add('warningCancel');
+warningCancel.addEventListener('click', () => {
+    warningPopup.classList.remove('active');
+});
+const warningDelete = document.createElement('button');
+warningDelete.classList.add('warningDelete');
+warningDelete.textContent = "Delete";
+warningDelete.addEventListener('click', () => {
+    projectList.deleteProject(warningPopup.dataset.projectIndex);
+    warningPopup.classList.remove('active');
+});
+warningPopup.appendChild(warningCancel);
+warningPopup.appendChild(warningDelete);
+document.body.appendChild(warningPopup);
+
+
 const taskContainer = document.createElement('div');
 taskContainer.classList.add('taskContainer');
 document.body.appendChild(taskContainer);
@@ -239,3 +263,5 @@ function storageAvailable(type) {
         );
     };
 };
+
+export { warningPopup };

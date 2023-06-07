@@ -1,4 +1,5 @@
 import { sortTasks } from "./taskMethods";
+import { warningPopup } from ".";
 
 function addProject(projectName) {
     const domElement = addProjectToDom(projectName);
@@ -35,6 +36,15 @@ function addProjectToDom(projectName) {
 
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('deleteProjectButton');
+    deleteButton.addEventListener('click', () => {
+        if (!projectList.isProjectEmpty(newProject.dataset.index)) {
+            warningPopup.classList.add('active');
+            warningPopup.dataset.projectIndex = newProject.dataset.index;
+        } else {
+            projectList.deleteProject(newProject.dataset.index);
+        }
+    });
+
     newProject.appendChild(editButton);
     newProject.appendChild(deleteButton);
 
@@ -81,6 +91,22 @@ const projectList = {
     addToStorage: function() {
         window.localStorage.projects = JSON.stringify(this.projects);
     },
+    isProjectEmpty: function(index) {
+        if (this.projects[index].tasks.length > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    },
+    deleteProject: function(index) {
+        const taskElements = document.querySelectorAll('.taskWrapper');
+        for (let element of taskElements) {
+            element.remove();
+        }
+        this.projects[index].element.remove();
+        this.projects.splice(index, 1);
+        this.addToStorage();
+    }
 };
 
 export { addProject, projectList };
