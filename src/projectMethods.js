@@ -21,6 +21,9 @@ function addProjectToDom(projectName) {
     projectTitle.disabled = 'disabled';
     projectTitle.addEventListener('focusout', () => {
         projectTitle.disabled = 'disabled';
+        if (projectTitle.value === '') {
+            projectTitle.value = 'Unnamed Project'
+        };
     });
     projectTitle.addEventListener('input', function() {
         projectList.editProject(newProject.dataset.index, this.value);
