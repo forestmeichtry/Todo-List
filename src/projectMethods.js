@@ -91,6 +91,11 @@ const projectList = {
     addTask: function(task) {
         this.activeProject.tasks.push(task);
     },
+    removeTask: function(index) {
+        this.activeProject.tasks.splice(index, 1);
+        sortTasks();
+        this.addToStorage();
+    },
     addToStorage: function() {
         window.localStorage.projects = JSON.stringify(this.projects);
     },

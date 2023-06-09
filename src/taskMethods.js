@@ -80,15 +80,52 @@ function addTaskToDOM(task) {
     const completeButton = document.createElement('button');
     completeButton.classList.add('completeButton');
     completeButton.textContent = "Complete";
+    completeButton.addEventListener('click', () => {
+        projectList.removeTask(Array.from(taskContainer.children).indexOf(taskWrapper));
+    });
     taskWrapper.appendChild(completeButton);
 
     const editButton = document.createElement('button');
     editButton.classList.add('editButton');
     editButton.textContent = "Edit";
+    editButton.addEventListener('click', () => {
+        activateEditTaskForm(
+            Array.from(taskContainer.children).indexOf(taskWrapper),
+            task.taskName,
+            task.dueDate,
+            task.importance,
+            task.description);
+    });
     taskWrapper.appendChild(editButton);
 
     taskContainer.appendChild(taskWrapper);
 };
+
+function activateEditTaskForm(taskIndex, taskName, dueDate, taskImportance, taskDescription) {
+    const popup = document.querySelector('.addTaskPopup');
+    popup.classList.add('active');
+    popup.dataset.mode = 'edit';
+    popup.dataset.editIndex = taskIndex;
+
+    popup.querySelector('.fieldsetLegend').textContent = 'Edit Task';
+
+    popup.querySelector('[id="Task Name"]').value = taskName;
+
+    if (dueDate != 'No Due Date') {
+        popup.querySelector('[id="Task Due Date"]').value = dueDate;
+    };
+
+    let radioElements = document.getElementsByName('importance');
+    for (let i = 0; i < 3; i++) {
+        if (radioElements[i].value === taskImportance) {
+            radioElements[i].checked = 'true';
+        };
+    };
+
+    if (taskDescription != 'None') {
+        popup.querySelector('[id="Task Description"]').value = taskDescription;
+    };
+}
 
 const taskFactory = (taskName, description, dueDate, importance) => {
     // const thisIsAnExample = () => console.log('this is a function');

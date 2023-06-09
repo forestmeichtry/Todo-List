@@ -82,6 +82,8 @@ pageHeader.appendChild(addTaskButton);
 
 addTaskButton.addEventListener('click', () => {
     addTaskPopup.classList.toggle('active');
+    addTaskPopup.dataset.mode = 'add';
+    addTaskPopup.querySelector('.fieldsetLegend').textContent = 'New Task';
 });
 
 if (window.screen.width <= 1024) {
@@ -115,7 +117,7 @@ function createTaskForm() {
     const taskFieldset = document.createElement('fieldset');
     addTaskPopup.appendChild(taskFieldset);
     const legend = document.createElement('legend');
-    legend.textContent = 'New Task';
+    legend.classList.add('fieldsetLegend');
     taskFieldset.appendChild(legend);
 
     const formList = document.createElement('form');
@@ -140,7 +142,7 @@ function createTaskForm() {
     labelTwo.textContent = 'Due Date:';
     dateInput.type = 'date';
     dateInput.id = 'Task Due Date';
-    nameInput.name = 'due_date';
+    dateInput.name = 'due_date';
     const labelThree = document.createElement('label');
     formList.appendChild(labelThree);
     const radioWrap = document.createElement('div');
@@ -193,6 +195,7 @@ function createTaskForm() {
 
     const cancelButton = document.createElement('button');
     cancelButton.textContent = 'Cancel';
+    cancelButton.type = 'button';
     formButtonWrap.appendChild(cancelButton);
     cancelButton.addEventListener('click', () => {
         addTaskPopup.classList.remove('active');
@@ -206,35 +209,43 @@ function createTaskForm() {
     formList.addEventListener('submit', function(event) {
         event.preventDefault();
         addTaskPopup.classList.remove('active');
-
-        let dateValue = null;
-        if (dateInput.value === '') {
-            dateValue = 'No Due Date';
-        } else {
-            dateValue = dateInput.value;
+        
+        if (addTaskPopup.dataset.mode === 'edit') {
+            projectList.removeTask(addTaskPopup.dataset.editIndex);
         };
 
-        let checkedRadio = null;
-        let radioElements = document.getElementsByName('importance');
-        for (let i = 0; i < 3; i++) {
-            if (radioElements[i].checked) {
-                checkedRadio = radioElements[i].value;
-            };
-        };
-
-        let descriptionValue = null;
-        if (descriptionInput.value === '') {
-            descriptionValue = 'None';
-        } else {
-            descriptionValue = descriptionInput.value;
-        };
-
-        addTask(nameInput.value, descriptionValue, dateValue, checkedRadio);
+        formSubmit(nameInput.value, descriptionInput.value, dateInput.value);
 
         formList.reset();
         radioMed.checked = true;
     });
 };
+
+function formSubmit(nameInput, descriptionInput, dateInput) {
+    let dateValue = null;
+    if (dateInput === '') {
+        dateValue = 'No Due Date';
+    } else {
+        dateValue = dateInput;
+    };
+
+    let checkedRadio = null;
+    let radioElements = document.getElementsByName('importance');
+    for (let i = 0; i < 3; i++) {
+        if (radioElements[i].checked) {
+            checkedRadio = radioElements[i].value;
+        };
+    };
+
+    let descriptionValue = null;
+    if (descriptionInput === '') {
+        descriptionValue = 'None';
+    } else {
+        descriptionValue = descriptionInput;
+    };
+
+    addTask(nameInput, descriptionValue, dateValue, checkedRadio);
+}
 
 
 function storageAvailable(type) {
