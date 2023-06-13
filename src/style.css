@@ -7,7 +7,7 @@
 
     --headerHeight: 120px;
     --sideNavWidth: 300px;
-    --taskHeight: 100px;
+    --taskHeight: 60px;
 
     --gradientColorOne: var(--kellyGreen);
     --gradientColorTwo: #54c046;
@@ -191,7 +191,7 @@ button:hover {
 .taskWrapper {
     position: relative;
     display: grid;
-    gap: 10px;
+    row-gap: 30px;
     grid-template-columns: 1fr 120px 120px;
     grid-template-rows: 45px 20px 40px 80px;
     height: var(--taskHeight);
@@ -207,12 +207,13 @@ button:hover {
 }
 
 .taskWrapper.expanded {
-    height: calc(var(--taskHeight) * 2);
+    height: 280px;
 }
 
 .taskName {
     grid-area: 1 / 1 / 2 / 4;
     font-size: x-large;
+    justify-self: center;
 }
 
 .taskDescription {
@@ -227,7 +228,9 @@ button:hover {
     content: 'Description: \A';
 }
 
-.taskWrapper.expanded .taskDescription {
+.taskWrapper.expanded .taskDescription,
+.taskWrapper.expanded .dueDate,
+.taskWrapper.expanded .taskImportance {
     opacity: 1;
     transition-delay: .3s;
 }
@@ -235,6 +238,8 @@ button:hover {
 .dueDate {
     grid-area: 2 / 2 / 3 / 3;
     align-self: center;
+    opacity: 0;
+    transition-duration: .5s;
 }
 
 .dueDate::before {
@@ -246,6 +251,8 @@ button:hover {
 .taskImportance {
     grid-area: 2 / 3 / 3 / 4;
     align-self: center;
+    opacity: 0;
+    transition-duration: .5s;
 }
 
 .taskImportance::before {
@@ -448,7 +455,6 @@ textarea {
 
     .taskWrapper {
         grid-template-columns: 1fr 1fr;
-        padding-right: 5px;
     }
 
     .taskName {
