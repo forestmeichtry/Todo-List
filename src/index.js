@@ -81,9 +81,11 @@ addTaskButton.textContent = "Add Task";
 pageHeader.appendChild(addTaskButton);
 
 addTaskButton.addEventListener('click', () => {
-    addTaskPopup.classList.toggle('active');
-    addTaskPopup.dataset.mode = 'add';
-    addTaskPopup.querySelector('.fieldsetLegend').textContent = 'New Task';
+    if (!addTaskPopup.classList.contains('active')) {
+        addTaskPopup.classList.add('active');
+        addTaskPopup.dataset.mode = 'add';
+        addTaskPopup.querySelector('.fieldsetLegend').textContent = 'New Task';
+    }
 });
 
 if (window.screen.width <= 1024) {
@@ -207,6 +209,7 @@ function createTaskForm() {
     formButtonWrap.appendChild(cancelButton);
     cancelButton.addEventListener('click', () => {
         addTaskPopup.classList.remove('active');
+        formList.reset();
     });
 
     const submitButton = document.createElement('button');
