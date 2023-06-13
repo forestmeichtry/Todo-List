@@ -56,7 +56,9 @@ const taskContainer = document.createElement('div');
 taskContainer.classList.add('taskContainer');
 document.body.appendChild(taskContainer);
 
-pageHeader.textContent = "Taskmaster";
+const logo = document.createElement('span');
+logo.classList.add('logo');
+pageHeader.appendChild(logo);
 
 const sortButton = document.createElement('button');
 sortButton.classList.add('sortButton');
