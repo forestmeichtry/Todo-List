@@ -212,6 +212,7 @@ function createTaskForm() {
     cancelButton.addEventListener('click', () => {
         addTaskPopup.classList.remove('active');
         formList.reset();
+        radioMed.checked = true;
     });
 
     const submitButton = document.createElement('button');
