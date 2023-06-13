@@ -94,6 +94,12 @@ if (window.screen.width <= 1024) {
     expandSideNavButton.addEventListener('click', () => {
         document.body.classList.toggle('mobileMenu');
     });
+
+    taskContainer.addEventListener('click', () => {
+        if (document.body.classList.contains('mobileMenu')) {
+            document.body.classList.toggle('mobileMenu');
+        };
+    });
 }
 
 if (storageAvailable('localStorage') && window.localStorage.getItem("projects")) {
