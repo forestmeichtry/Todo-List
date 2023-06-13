@@ -323,8 +323,8 @@ button:hover {
 
 .addTaskPopup.active {
     transform: translateY(10vmax);
-    height: min(70vmax, 450px);
-    width: min(80vw, 400px);
+    height: 450px;
+    width: 300px;
 }
 
 .warningPopup.active {
@@ -393,6 +393,7 @@ textarea {
     }
 
     .taskContainer {
+        padding-bottom: 100%;
         grid-area: 2 / 1 / 3 / 3;
     }
 
