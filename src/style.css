@@ -8,6 +8,10 @@
     --headerHeight: 120px;
     --sideNavWidth: 300px;
     --taskHeight: 100px;
+
+    --gradientColorOne: var(--kellyGreen);
+    --gradientColorTwo: #54c046;
+    --gradientStop: 110%;
 }
 
 @font-face {
@@ -184,7 +188,9 @@ button:hover {
     flex-shrink: 0;
     border-radius: 6px;
     padding: 15px;
-    background-color: var(--kellyGreen);
+    background: linear-gradient(30deg, var(--gradientColorOne), var(--gradientStop), var(--gradientColorTwo));
+    background-size: 600%;
+    background-position: center;
     overflow: hidden;
     transition: .5s;
     transition-timing-function: ease-in-out;

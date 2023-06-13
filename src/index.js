@@ -1,5 +1,5 @@
 import './style.css';
-import { addTask, sortTasks } from './taskMethods';
+import { addTask, sortTasks, animateTaskBackground } from './taskMethods';
 import { addProject, projectList } from './projectMethods';
 
 const pageHeader = document.createElement('div');
@@ -109,6 +109,8 @@ if (storageAvailable('localStorage') && window.localStorage.getItem("projects"))
     addProject('Work');
     addProject('Home');
 };
+
+animateTaskBackground();
 
 function createTaskForm() {
     addTaskPopup.classList.add('addTaskPopup');

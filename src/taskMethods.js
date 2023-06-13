@@ -1,5 +1,5 @@
 import { projectList } from "./projectMethods";
-import { compareAsc, parseISO } from "date-fns";
+import { compareAsc, parseISO, set } from "date-fns";
 
 function addTask(taskName, description, dueDate, importance) {
     const newTask = taskFactory(taskName, description, dueDate, importance);
@@ -125,7 +125,7 @@ function activateEditTaskForm(taskIndex, taskName, dueDate, taskImportance, task
     if (taskDescription != 'None') {
         popup.querySelector('[id="Task Description"]').value = taskDescription;
     };
-}
+};
 
 const taskFactory = (taskName, description, dueDate, importance) => {
     // const thisIsAnExample = () => console.log('this is a function');
@@ -133,4 +133,22 @@ const taskFactory = (taskName, description, dueDate, importance) => {
     return {taskName, description, dueDate, importance};
 };
 
-export { addTask, sortTasks };
+function animateTaskBackground() {
+    const root = document.querySelector(':root');
+    const gradientStop = getComputedStyle(root).getPropertyValue('--gradientStop');
+    const gradientColorOne = getComputedStyle(root).getPropertyValue('--gradientColorOne');
+    const gradientColorTwo = getComputedStyle(root).getPropertyValue('--gradientColorTwo');
+    const parsedStop =  parseInt(gradientStop.replace(/\D/g, ''));
+    
+    if (parsedStop < 101) {
+        root.style.setProperty('--gradientStop', (parsedStop + 1) + '%');
+    } else {
+        root.style.setProperty('--gradientStop', '0%');
+        root.style.setProperty('--gradientColorOne', gradientColorTwo);
+        root.style.setProperty('--gradientColorTwo', gradientColorOne);
+    };
+
+    setTimeout(animateTaskBackground, 10);
+};
+
+export { addTask, sortTasks, animateTaskBackground };
