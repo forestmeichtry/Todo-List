@@ -104,7 +104,14 @@ if (window.screen.width <= 1024) {
             document.body.classList.toggle('mobileMenu');
         };
     });
-}
+} else {
+    const taskTrackOne = document.createElement('div');
+    taskTrackOne.classList.add('trackOne');
+    const taskTrackTwo = document.createElement('div');
+    taskTrackTwo.classList.add('trackTwo');
+    taskContainer.appendChild(taskTrackOne);
+    taskContainer.appendChild(taskTrackTwo);
+};
 
 if (storageAvailable('localStorage') && window.localStorage.getItem("projects")) {
     let projects = JSON.parse(window.localStorage.getItem("projects"));

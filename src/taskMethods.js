@@ -13,8 +13,20 @@ function sortTasks() {
     const sortType = projectList.sortBy;
     const taskContainer = document.querySelector('.taskContainer');
 
-    while (taskContainer.firstChild) {
-        taskContainer.removeChild(taskContainer.lastChild);
+    if (window.screen.width <= 1024) {
+        while (taskContainer.firstChild) {
+            taskContainer.removeChild(taskContainer.lastChild);
+        };
+    } else {
+        const trackOne = document.querySelector('.trackOne');
+        while (trackOne.firstChild) {
+            trackOne.removeChild(trackOne.lastChild);
+        };
+
+        const trackTwo = document.querySelector('.trackTwo');
+        while (trackTwo.firstChild) {
+            trackTwo.removeChild(trackTwo.lastChild);
+        };
     };
 
     if (sortType === 'Date') {
@@ -39,12 +51,12 @@ function sortTasks() {
         });
     };
 
-    for (let task of project.tasks) {
-        addTaskToDOM(task);
+    for (let i = 0; i < project.tasks.length; i++) {
+        addTaskToDOM(project.tasks[i], i);
     }
 }
 
-function addTaskToDOM(task) {
+function addTaskToDOM(task, index) {
     const taskContainer = document.querySelector('.taskContainer');
 
     const taskWrapper = document.createElement('div');
@@ -81,7 +93,7 @@ function addTaskToDOM(task) {
     completeButton.classList.add('completeButton');
     completeButton.textContent = "Complete";
     completeButton.addEventListener('click', () => {
-        projectList.removeTask(Array.from(taskContainer.children).indexOf(taskWrapper));
+        projectList.removeTask(index);
     });
     taskWrapper.appendChild(completeButton);
 
@@ -90,7 +102,7 @@ function addTaskToDOM(task) {
     editButton.textContent = "Edit";
     editButton.addEventListener('click', () => {
         activateEditTaskForm(
-            Array.from(taskContainer.children).indexOf(taskWrapper),
+            index,
             task.taskName,
             task.dueDate,
             task.importance,
@@ -98,7 +110,19 @@ function addTaskToDOM(task) {
     });
     taskWrapper.appendChild(editButton);
 
-    taskContainer.appendChild(taskWrapper);
+    if (window.screen.width <= 1024) {
+        taskContainer.appendChild(taskWrapper);
+    } else {
+        console.log('test');
+        const trackOne = document.querySelector('.trackOne');
+        const trackTwo = document.querySelector('.trackTwo');
+
+        if (trackOne.childElementCount > trackTwo.childElementCount) {
+            trackTwo.appendChild(taskWrapper);
+        } else {
+            trackOne.appendChild(taskWrapper);
+        };
+    };
 };
 
 function activateEditTaskForm(taskIndex, taskName, dueDate, taskImportance, taskDescription) {

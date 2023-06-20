@@ -179,8 +179,8 @@ button:hover {
 }
 
 .taskContainer {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     background-image: url(Assets/noteTile.png);
     background-size: 500px;
     padding: 10px;
@@ -188,12 +188,20 @@ button:hover {
     overflow-y: auto;
 }
 
+.trackOne,
+.trackTwo {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+}
+
 .taskWrapper {
     position: relative;
     display: grid;
     row-gap: 30px;
     grid-template-columns: 1fr 120px 120px;
-    grid-template-rows: 45px 20px 40px 80px;
+    grid-template-rows: 45px 20px 60px;
     height: var(--taskHeight);
     flex-shrink: 0;
     border-radius: 6px;
@@ -207,7 +215,7 @@ button:hover {
 }
 
 .taskWrapper.expanded {
-    height: 280px;
+    height: 200px;
 }
 
 .taskName {
@@ -217,7 +225,7 @@ button:hover {
 }
 
 .taskDescription {
-    grid-area: 3 / 1 / 5 / 2;
+    grid-area: 2 / 1 / 4 / 2;
     opacity: 0;
     transition-duration: .5s;
 }
@@ -295,11 +303,11 @@ button:hover {
 }
 
 .editButton {
-    grid-area: 4 / 2 / 5 / 3;
+    grid-area: 3 / 2 / 4 / 3;
 }
 
 .completeButton {
-    grid-area: 4 / 3 / 5 / 4;
+    grid-area: 3 / 3 / 4 / 4;
 }
 
 .addTaskPopup,
@@ -453,8 +461,17 @@ textarea {
         background-color: var(--darkSlateGray);
     }
 
+    .taskContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
     .taskWrapper {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .taskWrapper.expanded {
+        height: 280px;
     }
 
     .taskName {
